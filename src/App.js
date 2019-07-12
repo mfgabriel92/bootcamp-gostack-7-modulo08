@@ -1,8 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const App = () => {
-  const [tech, setTech] = useState(['ReactJS', 'React Native'])
+  const [tech, setTech] = useState([])
   const [newTech, setNewTech] = useState('')
+
+  useEffect(() => {
+    const techs = localStorage.getItem('techs')
+
+    if (tech) setTech(JSON.parse(techs))
+
+    return () => console.log('Unmounted')
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('techs', JSON.stringify(tech))
+  }, [tech])
 
   const handleAdd = () => {
     setTech([...tech, newTech])
